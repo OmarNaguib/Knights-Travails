@@ -8,7 +8,16 @@ const knightMoves = [
   [-2, 1],
   [-2, -1],
 ];
-function getChildren() {}
+
+function addArrayElements(first, second) {
+  return first.map((item, index) => first[index] + second[index]);
+}
+function getChildren(path) {
+  return knightMoves.map((move) => {
+    const newPath = [...path];
+    newPath.push(newPath[-1]);
+  });
+}
 function knightsWay(initialPosition, targetPosition) {
   const queue = [[initialPosition]];
   while (queue.length > 1) {
@@ -20,4 +29,6 @@ function knightsWay(initialPosition, targetPosition) {
   return null;
 }
 
-knightsWay([0, 0], [1, 2]);
+// knightsWay([0, 0], [1, 2]);
+
+console.log(addArrayElements([-1, 2], [-1, 2]));
