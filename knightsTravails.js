@@ -15,7 +15,9 @@ function addArrayElements(first, second) {
 function getChildren(path) {
   return knightMoves.map((move) => {
     const newPath = [...path];
-    newPath.push(newPath[-1]);
+    console.log(path, newPath);
+    newPath.push(addArrayElements(newPath[newPath.length - 1], move));
+    return newPath;
   });
 }
 function knightsWay(initialPosition, targetPosition) {
@@ -32,3 +34,10 @@ function knightsWay(initialPosition, targetPosition) {
 // knightsWay([0, 0], [1, 2]);
 
 console.log(addArrayElements([-1, 2], [-1, 2]));
+console.log(getChildren([[4, 4]]));
+console.log(
+  getChildren([
+    [4, 4],
+    [5, 6],
+  ])
+);
