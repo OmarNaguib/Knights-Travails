@@ -12,14 +12,26 @@ const knightMoves = [
 function addArrayElements(first, second) {
   return first.map((item, index) => first[index] + second[index]);
 }
-function getChildren(path) {
-  return knightMoves.map((move) => {
-    const newPath = [...path];
-    console.log(path, newPath);
-    newPath.push(addArrayElements(newPath[newPath.length - 1], move));
-    return newPath;
-  });
+function makeMove(path, move) {
+  return [...path].concat([addArrayElements(path[path.length - 1], move)]);
 }
+
+function isValidNumber(number) {
+  return number < 8 && number > -1;
+}
+
+function isValidSquare(square) {
+  return isValidNumber(square[0]) && isValidNumber(square[1]);
+}
+
+function isValidPath(path) {
+  return isValidSquare(path[path.length - 1]);
+}
+
+function getChildren(path) {
+  return knightMoves.map(makeMove.bind(null, path)).filter(isValidPath);
+}
+
 function knightsWay(initialPosition, targetPosition) {
   const queue = [[initialPosition]];
   while (queue.length > 1) {
@@ -39,5 +51,20 @@ console.log(
   getChildren([
     [4, 4],
     [5, 6],
+  ])
+);
+
+console.log(
+  isValidPath([
+    [4, 4],
+    [5, 6],
+    [6, 7],
+  ])
+);
+console.log(
+  isValidPath([
+    [4, 4],
+    [5, 6],
+    [-1, -1],
   ])
 );
