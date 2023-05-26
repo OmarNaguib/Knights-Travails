@@ -32,39 +32,33 @@ function getChildren(path) {
   return knightMoves.map(makeMove.bind(null, path)).filter(isValidPath);
 }
 
+function arrayEquals(first, second) {
+  return JSON.stringify(first) === JSON.stringify(second);
+}
+
 function knightsWay(initialPosition, targetPosition) {
   const queue = [[initialPosition]];
-  while (queue.length > 1) {
+  while (queue.length >= 1) {
     const currentPath = queue.pop();
-    if (currentPath[currentPath.length - 1] === targetPosition)
+    if (arrayEquals(currentPath[currentPath.length - 1], targetPosition))
       return currentPath;
     queue.unshift(...getChildren(currentPath));
   }
   return null;
 }
 
-// knightsWay([0, 0], [1, 2]);
+function printWay(initialPosition, targetPosition) {
+  const way = knightsWay(initialPosition, targetPosition);
+  let string = `You made it in ${way.length} moves!  Here's your path:`;
+  way.forEach((list) => {
+    string += `
+    ${list}`;
+  });
+  console.log(string);
+}
 
-console.log(addArrayElements([-1, 2], [-1, 2]));
-console.log(getChildren([[4, 4]]));
-console.log(
-  getChildren([
-    [4, 4],
-    [5, 6],
-  ])
-);
-
-console.log(
-  isValidPath([
-    [4, 4],
-    [5, 6],
-    [6, 7],
-  ])
-);
-console.log(
-  isValidPath([
-    [4, 4],
-    [5, 6],
-    [-1, -1],
-  ])
-);
+console.log(knightsWay([0, 0], [1, 2]));
+console.log(knightsWay([0, 0], [3, 3]));
+console.log(knightsWay([3, 3], [0, 0]));
+console.log(knightsWay([3, 3], [4, 3]));
+printWay([3, 3], [4, 3]);
